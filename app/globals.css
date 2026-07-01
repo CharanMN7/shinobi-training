@@ -1,26 +1,189 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* ───────────────────────────────────────────────
+   SHINOBI ATHLETIC — dark-only design system
+   ─────────────────────────────────────────────── */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Shinobi brand palette — available as Tailwind utilities */
+  --color-chakra-orange: #F97316;
+  --color-rasengan-blue: #3B82F6;
+  --color-ninetails-red: #E63946;
+  --color-leaf-green: #2F9E44;
+  --color-rank-gold: #F4C20D;
+  --color-canvas: #0D0D0F;
+  --color-surface-1: #161719;
+  --color-surface-2: #1E2023;
+  --color-hairline: #2A2D31;
+
+  --font-display: "Archivo", sans-serif;
+  --font-sans: "Inter", sans-serif;
+
+  --radius: 0.75rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Dark palette (always dark) ── */
+:root {
+  color-scheme: dark;
+
+  --background: #0D0D0F;
+  --foreground: #F5F6F7;
+
+  --card: #161719;
+  --card-foreground: #F5F6F7;
+
+  --popover: #1E2023;
+  --popover-foreground: #F5F6F7;
+
+  --primary: #F97316;
+  --primary-foreground: #0D0D0F;
+
+  --secondary: #1E2023;
+  --secondary-foreground: #F5F6F7;
+
+  --muted: #2A2D31;
+  --muted-foreground: #A1A6AD;
+
+  --accent: #2A2D31;
+  --accent-foreground: #F5F6F7;
+
+  --destructive: #E63946;
+  --destructive-foreground: #F5F6F7;
+
+  --border: #2A2D31;
+  --input: #2A2D31;
+  --ring: #F97316;
+
+  --chart-1: #F97316;
+  --chart-2: #3B82F6;
+  --chart-3: #2F9E44;
+  --chart-4: #F4C20D;
+  --chart-5: #E63946;
+
+  --sidebar: #161719;
+  --sidebar-foreground: #F5F6F7;
+  --sidebar-border: #2A2D31;
+  --sidebar-primary: #F97316;
+  --sidebar-primary-foreground: #0D0D0F;
+  --sidebar-accent: #1E2023;
+  --sidebar-accent-foreground: #F5F6F7;
+  --sidebar-ring: #F97316;
 }
+
+/* ── Base ── */
+* { border-color: var(--border); }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Safe-area helpers ── */
+.safe-top    { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+/* ── Chakra energy bar ── */
+@keyframes chakra-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.chakra-bar {
+  background: linear-gradient(90deg, #F97316 0%, #FBB840 50%, #F97316 100%);
+  background-size: 200% 100%;
+  animation: chakra-shimmer 2.5s linear infinite;
+}
+.chakra-bar-blue {
+  background: linear-gradient(90deg, #3B82F6 0%, #60A5FA 50%, #3B82F6 100%);
+  background-size: 200% 100%;
+  animation: chakra-shimmer 2.5s linear infinite;
+}
+.chakra-bar-green {
+  background: linear-gradient(90deg, #2F9E44 0%, #4ADE80 50%, #2F9E44 100%);
+  background-size: 200% 100%;
+  animation: chakra-shimmer 2.5s linear infinite;
+}
+
+/* ── Rank-up burst ── */
+@keyframes chakra-burst {
+  0%   { transform: scale(0.85); opacity: 0; }
+  60%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+.chakra-burst { animation: chakra-burst 0.55s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+/* ── Aura glows ── */
+.chakra-glow-orange { box-shadow: 0 0 0 1px #F97316, 0 0 20px 2px rgba(249,115,22,0.25); }
+.chakra-glow-red    { box-shadow: 0 0 0 1px #E63946, 0 0 20px 2px rgba(230,57,70,0.25); }
+.chakra-glow-gold   { box-shadow: 0 0 0 1px #F4C20D, 0 0 20px 2px rgba(244,194,13,0.25); }
+.chakra-glow-blue   { box-shadow: 0 0 0 1px #3B82F6, 0 0 20px 2px rgba(59,130,246,0.25); }
+
+/* ── Spiral spinner ── */
+@keyframes spiral-spin { to { transform: rotate(360deg); } }
+.spiral-spin { animation: spiral-spin 1.2s linear infinite; }
+
+/* ── Stat glow text ── */
+.stat-glow-orange { text-shadow: 0 0 12px rgba(249,115,22,0.6); }
+.stat-glow-gold   { text-shadow: 0 0 12px rgba(244,194,13,0.5); }
+.stat-glow-green  { text-shadow: 0 0 12px rgba(47,158,68,0.5); }
+.stat-glow-red    { text-shadow: 0 0 12px rgba(230,57,70,0.5); }
+
+/* ── Headband plate motif ── */
+.headband-plate {
+  background: linear-gradient(180deg, #2A2D31 0%, #1E2023 40%, #161719 100%);
+  border-bottom: 1.5px solid #3A3D42;
+  box-shadow: 0 2px 0 0 rgba(249,115,22,0.12);
+}
+
+/* ── Hard-offset shadows ── */
+.shadow-hard-sm { box-shadow: 2px 2px 0 0 rgba(0,0,0,0.6); }
+.shadow-hard    { box-shadow: 3px 3px 0 0 rgba(0,0,0,0.6); }
+
+/* ── Scrollbars ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: #2A2D31; border-radius: 2px; }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .chakra-bar, .chakra-bar-blue, .chakra-bar-green,
+  .chakra-burst, .spiral-spin { animation: none; }
 }
