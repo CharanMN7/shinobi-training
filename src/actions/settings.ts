@@ -7,9 +7,22 @@ import { z } from "zod";
 import { auth } from "@/src/lib/auth";
 import { revalidatePath } from "next/cache";
 
+function isValidIANATimezone(tz: string): boolean {
+  try {
+    Intl.DateTimeFormat(undefined, { timeZone: tz });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 const updateSettingsSchema = z.object({
   goalWeightKg: z.number().positive().min(30).max(200),
-  timezone: z.string().min(1),
+  timezone: z
+    .string()
+    .min(1)
+    .max(64)
+    .refine(isValidIANATimezone, { message: "Invalid timezone identifier" }),
 });
 
 export async function updateSettings(input: z.infer<typeof updateSettingsSchema>) {

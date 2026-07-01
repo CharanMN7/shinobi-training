@@ -8,16 +8,34 @@ import * as argon2 from "argon2";
 
 const loginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
+  // max 128 prevents argon2 DoS via multi-MB inputs
+  password: z.string().min(8).max(128),
 });
 
 const MAX_ATTEMPTS = 10;
 const LOCKOUT_MINUTES = 15;
 
-async function checkRateLimit(email: string): Promise<boolean> {
+// Cached dummy hash — used for constant-time comparison when user not found,
+// preventing timing-based user enumeration.
+let _dummyHash: string | null = null;
+async function getDummyHash(): Promise<string> {
+  if (!_dummyHash) {
+    _dummyHash = await argon2.hash("__shinobi_dummy_sentinel__", {
+      type: argon2.argon2id,
+      memoryCost: 65536,
+      timeCost: 3,
+      parallelism: 4,
+    });
+  }
+  return _dummyHash;
+}
+
+// All rate-limit keys are lowercased to prevent case-variant bypass attacks
+// (e.g., USER@example.com vs user@example.com treated as different identifiers).
+async function checkRateLimit(normalizedEmail: string): Promise<boolean> {
   const now = new Date();
   const existing = await db.query.loginAttempts.findFirst({
-    where: eq(loginAttempts.identifier, email),
+    where: eq(loginAttempts.identifier, normalizedEmail),
   });
 
   if (existing?.lockedUntil && existing.lockedUntil > now) {
@@ -27,15 +45,15 @@ async function checkRateLimit(email: string): Promise<boolean> {
   return true;
 }
 
-async function recordFailedAttempt(email: string) {
+async function recordFailedAttempt(normalizedEmail: string) {
   const now = new Date();
   const existing = await db.query.loginAttempts.findFirst({
-    where: eq(loginAttempts.identifier, email),
+    where: eq(loginAttempts.identifier, normalizedEmail),
   });
 
   if (!existing) {
     await db.insert(loginAttempts).values({
-      identifier: email,
+      identifier: normalizedEmail,
       attempts: 1,
       updatedAt: now,
     });
@@ -51,14 +69,14 @@ async function recordFailedAttempt(email: string) {
   await db
     .update(loginAttempts)
     .set({ attempts: newAttempts, lockedUntil, updatedAt: now })
-    .where(eq(loginAttempts.identifier, email));
+    .where(eq(loginAttempts.identifier, normalizedEmail));
 }
 
-async function clearAttempts(email: string) {
+async function clearAttempts(normalizedEmail: string) {
   await db
     .update(loginAttempts)
     .set({ attempts: 0, lockedUntil: null, updatedAt: new Date() })
-    .where(eq(loginAttempts.identifier, email));
+    .where(eq(loginAttempts.identifier, normalizedEmail));
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -99,26 +117,30 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!parsed.success) return null;
 
         const { email, password } = parsed.data;
+        const normalizedEmail = email.toLowerCase();
 
-        const allowed = await checkRateLimit(email);
+        const allowed = await checkRateLimit(normalizedEmail);
         if (!allowed) throw new Error("Too many attempts. Try again later.");
 
         const user = await db.query.users.findFirst({
-          where: eq(users.email, email.toLowerCase()),
+          where: eq(users.email, normalizedEmail),
         });
 
         if (!user) {
-          await recordFailedAttempt(email);
+          // Run dummy verify to keep response time constant regardless of
+          // whether the email exists — prevents timing-based enumeration.
+          await argon2.verify(await getDummyHash(), password).catch(() => {});
+          await recordFailedAttempt(normalizedEmail);
           return null;
         }
 
         const valid = await argon2.verify(user.passwordHash, password);
         if (!valid) {
-          await recordFailedAttempt(email);
+          await recordFailedAttempt(normalizedEmail);
           return null;
         }
 
-        await clearAttempts(email);
+        await clearAttempts(normalizedEmail);
         return { id: user.id, email: user.email, displayName: user.displayName };
       },
     }),

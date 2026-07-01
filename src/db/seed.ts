@@ -104,6 +104,9 @@ async function seed() {
 }
 
 seed().catch((err) => {
-  console.error("Seed failed:", err);
+  let msg = err instanceof Error ? err.message : String(err);
+  // Redact any connection URL that might appear in DB error messages
+  msg = msg.replace(/postgresql:\/\/[^\s'"]+/gi, "[redacted-db-url]");
+  console.error("Seed failed:", msg);
   process.exit(1);
 });
