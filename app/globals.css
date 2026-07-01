@@ -118,8 +118,10 @@ body {
 }
 
 /* ── Safe-area helpers ── */
-.safe-top    { padding-top: env(safe-area-inset-top); }
-.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.safe-top      { padding-top: env(safe-area-inset-top); }
+.safe-bottom   { padding-bottom: env(safe-area-inset-bottom); }
+/* bottom-nav height (4rem) + home-indicator clearance */
+.pb-safe-nav   { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 
 /* ── Chakra energy bar ── */
 @keyframes chakra-shimmer {
@@ -155,6 +157,7 @@ body {
 .chakra-glow-red    { box-shadow: 0 0 0 1px #E63946, 0 0 20px 2px rgba(230,57,70,0.25); }
 .chakra-glow-gold   { box-shadow: 0 0 0 1px #F4C20D, 0 0 20px 2px rgba(244,194,13,0.25); }
 .chakra-glow-blue   { box-shadow: 0 0 0 1px #3B82F6, 0 0 20px 2px rgba(59,130,246,0.25); }
+.chakra-glow-green  { box-shadow: 0 0 0 1px #2F9E44, 0 0 20px 2px rgba(47,158,68,0.25); }
 
 /* ── Spiral spinner ── */
 @keyframes spiral-spin { to { transform: rotate(360deg); } }

@@ -1,3 +1,15 @@
+import { readFileSync } from "fs";
+import { resolve } from "path";
+
+// Load .env.local so the script works with bare `tsx src/db/seed.ts`
+try {
+  const content = readFileSync(resolve(process.cwd(), ".env.local"), "utf-8");
+  for (const line of content.split(/\r?\n/)) {
+    const m = line.match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
+  }
+} catch {}
+
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";

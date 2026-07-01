@@ -11,21 +11,26 @@ export async function Header({ title, subtitle }: HeaderProps) {
   const name = (session?.user as { displayName?: string })?.displayName ?? session?.user?.email ?? "Shinobi";
 
   return (
-    <header className="headband-plate sticky top-0 z-20 px-4 h-14 flex items-center justify-between md:hidden">
-      <SpiralLogo size={20} />
-      <div className="flex flex-col items-end">
-        {title ? (
-          <>
-            <span className="text-xs font-black font-[var(--font-archivo)] text-[#F5F6F7] uppercase tracking-wider">
-              {title}
-            </span>
-            {subtitle && (
-              <span className="text-[10px] text-[#6B7076]">{subtitle}</span>
-            )}
-          </>
-        ) : (
-          <span className="text-xs text-[#A1A6AD]">{name}</span>
-        )}
+    <header
+      className="headband-plate sticky top-0 z-20 md:hidden"
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
+    >
+      <div className="h-14 px-4 flex items-center justify-between">
+        <SpiralLogo size={20} />
+        <div className="flex flex-col items-end">
+          {title ? (
+            <>
+              <span className="text-xs font-black font-[var(--font-archivo)] text-[#F5F6F7] uppercase tracking-wider">
+                {title}
+              </span>
+              {subtitle && (
+                <span className="text-[10px] text-[#6B7076]">{subtitle}</span>
+              )}
+            </>
+          ) : (
+            <span className="text-xs text-[#A1A6AD]">{name}</span>
+          )}
+        </div>
       </div>
     </header>
   );

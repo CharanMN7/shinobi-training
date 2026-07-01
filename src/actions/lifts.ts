@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 const logLiftSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   lift: z.enum(["squat", "deadlift", "ohp", "pullup", "bench"]),
-  weightKg: z.number().positive().max(1000),
+  weightKg: z.number().min(0).max(1000),
   reps: z.number().int().positive().max(100),
   rpe: z.number().min(1).max(10).optional().nullable(),
   notes: z.string().max(500).optional().nullable(),

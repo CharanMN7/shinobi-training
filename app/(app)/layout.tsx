@@ -14,7 +14,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <Sidebar />
 
         {/* Main content */}
-        <main className="flex-1 min-w-0 pb-20 md:pb-0">
+        <main className="flex-1 min-w-0 pb-safe-nav md:pb-0">
           {children}
         </main>
 
