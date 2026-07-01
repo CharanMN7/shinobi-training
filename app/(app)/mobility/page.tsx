@@ -22,7 +22,7 @@ export default async function MobilityPage() {
   return (
     <div className="min-h-screen bg-[#0D0D0F]">
       <Header title="MOBILITY" subtitle="柔" />
-      <div className="px-4 py-4 md:px-6 md:py-6 max-w-3xl mx-auto">
+      <div className="px-4 pt-4 pb-safe-nav md:px-6 md:pt-6 md:pb-6 max-w-3xl mx-auto">
         <DesktopPageHeader title="Mobility & Skill Stats" subtitle="柔 — splits, handstands, L-sit" />
         <MobilityClient
           entries={entries.map((e) => ({

@@ -100,8 +100,8 @@ export function BodyStatsClient({ entries, goalKg }: { entries: BodyEntry[]; goa
 
       <Tabs defaultValue="log">
         <TabsList className="bg-[#0D0D0F] h-9">
-          <TabsTrigger value="log" className="text-xs data-[state=active]:bg-[#3B82F6] data-[state=active]:text-white">Log</TabsTrigger>
-          <TabsTrigger value="history" className="text-xs data-[state=active]:bg-[#3B82F6] data-[state=active]:text-white">History</TabsTrigger>
+          <TabsTrigger value="log" className="text-xs data-active:bg-[#3B82F6] data-active:text-white">Log</TabsTrigger>
+          <TabsTrigger value="history" className="text-xs data-active:bg-[#3B82F6] data-active:text-white">History</TabsTrigger>
         </TabsList>
 
         <TabsContent value="log" className="mt-3">

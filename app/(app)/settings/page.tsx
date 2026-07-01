@@ -21,7 +21,7 @@ export default async function SettingsPage() {
   return (
     <div className="min-h-screen bg-[#0D0D0F]">
       <Header title="SETTINGS" subtitle="設" />
-      <div className="px-4 py-4 md:px-6 md:py-6 max-w-2xl mx-auto">
+      <div className="px-4 pt-4 pb-safe-nav md:px-6 md:pt-6 md:pb-6 max-w-2xl mx-auto">
         <DesktopPageHeader title="Settings" subtitle="設 — configure your training" />
         <SettingsClient
           displayName={user?.displayName ?? ""}

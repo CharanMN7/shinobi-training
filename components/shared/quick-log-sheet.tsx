@@ -109,13 +109,13 @@ export function QuickLogSheet({ open, onOpenChange }: QuickLogSheetProps) {
 
         <Tabs value={category} onValueChange={(v: string) => setCategory(v as Category)}>
           <TabsList className="grid grid-cols-3 bg-[#0D0D0F] mb-4 h-10">
-            <TabsTrigger value="lift" className="text-xs data-[state=active]:bg-[#F97316] data-[state=active]:text-[#0D0D0F]">
+            <TabsTrigger value="lift" className="text-xs data-active:bg-[#F97316] data-active:text-[#0D0D0F]">
               Lift
             </TabsTrigger>
-            <TabsTrigger value="weight" className="text-xs data-[state=active]:bg-[#F97316] data-[state=active]:text-[#0D0D0F]">
+            <TabsTrigger value="weight" className="text-xs data-active:bg-[#F97316] data-active:text-[#0D0D0F]">
               Weight
             </TabsTrigger>
-            <TabsTrigger value="run" className="text-xs data-[state=active]:bg-[#F97316] data-[state=active]:text-[#0D0D0F]">
+            <TabsTrigger value="run" className="text-xs data-active:bg-[#F97316] data-active:text-[#0D0D0F]">
               Run
             </TabsTrigger>
           </TabsList>

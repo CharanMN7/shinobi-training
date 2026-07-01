@@ -159,13 +159,13 @@ export function LiftLogClient({
 
       <Tabs defaultValue="log">
         <TabsList className="bg-[#0D0D0F] h-9">
-          <TabsTrigger value="log" className="text-xs data-[state=active]:bg-[#F97316] data-[state=active]:text-[#0D0D0F]">
+          <TabsTrigger value="log" className="text-xs data-active:bg-[#F97316] data-active:text-[#0D0D0F]">
             Log Set
           </TabsTrigger>
-          <TabsTrigger value="history" className="text-xs data-[state=active]:bg-[#F97316] data-[state=active]:text-[#0D0D0F]">
+          <TabsTrigger value="history" className="text-xs data-active:bg-[#F97316] data-active:text-[#0D0D0F]">
             History
           </TabsTrigger>
-          <TabsTrigger value="chart" className="text-xs data-[state=active]:bg-[#F97316] data-[state=active]:text-[#0D0D0F]">
+          <TabsTrigger value="chart" className="text-xs data-active:bg-[#F97316] data-active:text-[#0D0D0F]">
             Trend
           </TabsTrigger>
         </TabsList>

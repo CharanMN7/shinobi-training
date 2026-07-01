@@ -23,7 +23,7 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-[#0D0D0F]">
       <Header />
 
-      <div className="px-4 py-4 md:px-6 md:py-6 max-w-6xl mx-auto space-y-5">
+      <div className="px-4 pt-4 pb-safe-nav md:px-6 md:pt-6 md:pb-6 max-w-6xl mx-auto space-y-5">
         {/* Desktop page title */}
         <div className="hidden md:block">
           <p className="text-[10px] text-[#6B7076] uppercase tracking-widest">忍 SHINOBI TRAINING</p>

@@ -14,7 +14,7 @@ export default function MorePage() {
   return (
     <div className="min-h-screen bg-[#0D0D0F]">
       <Header title="MORE" />
-      <div className="px-4 py-4 space-y-2">
+      <div className="px-4 pt-4 pb-safe-nav space-y-2">
         {links.map(({ href, label, icon: Icon, kanji, color }) => (
           <Link
             key={href}

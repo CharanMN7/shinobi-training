@@ -116,8 +116,8 @@ export function RunningClient({ entries }: { entries: RunEntry[] }) {
 
       <Tabs defaultValue="log">
         <TabsList className="bg-[#0D0D0F] h-9">
-          <TabsTrigger value="log" className="text-xs data-[state=active]:bg-[#2F9E44] data-[state=active]:text-white">Log Run</TabsTrigger>
-          <TabsTrigger value="history" className="text-xs data-[state=active]:bg-[#2F9E44] data-[state=active]:text-white">History</TabsTrigger>
+          <TabsTrigger value="log" className="text-xs data-active:bg-[#2F9E44] data-active:text-white">Log Run</TabsTrigger>
+          <TabsTrigger value="history" className="text-xs data-active:bg-[#2F9E44] data-active:text-white">History</TabsTrigger>
         </TabsList>
 
         <TabsContent value="log" className="mt-3">
